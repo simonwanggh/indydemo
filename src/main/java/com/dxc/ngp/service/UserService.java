@@ -177,56 +177,56 @@ public class UserService extends CommonService{
 	}
 	
 	
-	@PreDestroy
-	public void storeVo() throws FileNotFoundException, IOException {
-		if(vo == null) {
-			return;
-		}
-		
-		String homePath = System.getProperty("user.home");
-		String demoStrorePath = homePath + "/.indy_client/demostore";
-		Path dirPathObj = Paths.get(demoStrorePath);
-		
-		if(!Files.exists(dirPathObj)) {
-			try {
-				Files.createDirectories(dirPathObj);
-			} catch (IOException e) {
-				System.out.println("create store dir error!");
-			}
-		}
-		
-		String fileStorePath = homePath + "/.indy_client/demostore/uservo.ser";
-		
-		Path filePath = Paths.get(fileStorePath);
-		if(Files.exists(filePath)){
-			Files.delete(Paths.get(fileStorePath));
-		}
-		Files.createFile(filePath);
-
-		try(FileOutputStream fileOutputStream = new FileOutputStream(fileStorePath);
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)){
-		    objectOutputStream.writeObject(vo);
-		    objectOutputStream.flush();
-		}
-		
-	}
-	
-	
-	@PostConstruct
-	public void initialize() throws IOException, ClassNotFoundException {
-		String homePath = System.getProperty("user.home");
-		String demoStrorePath = homePath + "/.indy_client/demostore/uservo.ser";
-		Path dirPathObj = Paths.get(demoStrorePath);
-		if(!Files.exists(dirPathObj)) {
-			return;
-		}		
-		
-		
-		try(FileInputStream fileInputStream = new FileInputStream(demoStrorePath);
-				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
-				vo = (UserVo) objectInputStream.readObject();	    
-		}
-	}
+//	@PreDestroy
+//	public void storeVo() throws FileNotFoundException, IOException {
+//		if(vo == null) {
+//			return;
+//		}
+//		
+//		String homePath = System.getProperty("user.home");
+//		String demoStrorePath = homePath + "/.indy_client/demostore";
+//		Path dirPathObj = Paths.get(demoStrorePath);
+//		
+//		if(!Files.exists(dirPathObj)) {
+//			try {
+//				Files.createDirectories(dirPathObj);
+//			} catch (IOException e) {
+//				System.out.println("create store dir error!");
+//			}
+//		}
+//		
+//		String fileStorePath = homePath + "/.indy_client/demostore/uservo.ser";
+//		
+//		Path filePath = Paths.get(fileStorePath);
+//		if(Files.exists(filePath)){
+//			Files.delete(Paths.get(fileStorePath));
+//		}
+//		Files.createFile(filePath);
+//
+//		try(FileOutputStream fileOutputStream = new FileOutputStream(fileStorePath);
+//				ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)){
+//		    objectOutputStream.writeObject(vo);
+//		    objectOutputStream.flush();
+//		}
+//		
+//	}
+//	
+//	
+//	@PostConstruct
+//	public void initialize() throws IOException, ClassNotFoundException {
+//		String homePath = System.getProperty("user.home");
+//		String demoStrorePath = homePath + "/.indy_client/demostore/uservo.ser";
+//		Path dirPathObj = Paths.get(demoStrorePath);
+//		if(!Files.exists(dirPathObj)) {
+//			return;
+//		}		
+//		
+//		
+//		try(FileInputStream fileInputStream = new FileInputStream(demoStrorePath);
+//				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
+//				vo = (UserVo) objectInputStream.readObject();	    
+//		}
+//	}
 
 
 	public String  createDid(Wallet wallet,String userId) throws InterruptedException, ExecutionException, IndyException {
